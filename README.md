@@ -9,9 +9,10 @@ the moment you step outside that range. A real law does not.
 `verify.py` is a plain ~90-line **numpy** script. It does **not** use the SparkOrigin
 engine. For each dataset it fits a power law on a *training* region only, then
 predicts a *held-out extrapolation* region the fit never saw, and reports the
-recovered exponent and the held-out error. This is an *independent* re-check, so
-the numbers below differ slightly from the preprint (which uses SparkOrigin's own
-pipeline) — that is intentional. You don't have to take SparkOrigin's word for it.
+recovered exponent and the held-out error. It uses the same train/extrapolation
+split the preprint reports, so these numbers reproduce the preprint's — to within the
+small difference between a plain numpy fit and SparkOrigin's own pipeline. You don't
+have to take SparkOrigin's word for it.
 
 ## Run it
 
@@ -25,14 +26,16 @@ python verify.py        # needs only numpy
 |---|---:|---:|---:|---:|---:|
 | **Kepler (planets)** | 5 inner → 4 outer | **1.500** | 1.50 | **0.07%** | 0.09% |
 | Metabolic (mammals) | 124 → 53 | 0.711 | ~0.75 | 31.5% | 157.6% |
-| Zipf (Moby Dick) | 1400 → 600 | −1.075 | −1.00 | 2.77% | 6.17% |
-| City size (US) | 700 → 300 | −0.724 | ~−0.73 | 6.98% | 10.6% |
+| Zipf (Moby Dick) | top 400 → 1600 | −1.024 | −1.00 | 14.0% | 17.5% |
+| City size (US) | top 120 → 880 | −0.726 | ~−0.73 | 1.3% | 8.3% |
 
 **Kepler** is the cleanest case: trained on the five innermost planets alone,
 the recovered exponent is 1.500 (the law is `P ∝ a^(3/2)`), and it reconstructs
 the outer planets — Saturn through Pluto, a range it never saw — to **0.07%**
-median error. **Zipf** and **city size** recover their exponents with
-single-digit median extrapolation error.
+median error. **City size** recovers its exponent (−0.73) and extrapolates from the
+120 largest cities down to the rest at **1.3%** median; **Zipf** recovers its exponent
+(−1.02) and, extrapolating from the top 400 words across a far longer tail (ranks
+401–2000), holds to **14%** median.
 
 **Metabolic scaling is reported honestly, including where it is rough.** The
 exponent comes out at 0.71 — squarely in the empirical 2/3–3/4 band — but real
@@ -47,6 +50,10 @@ method is weak is the point of the project, not an embarrassment to it.
 - Metabolic: `log(rate) = 0.69271 · log(mass) + 1.1438`
 - Zipf (Moby Dick): `freq ∝ rank^(−1.024)`
 - City size (US): `population ∝ rank^(−0.726)`
+
+These are the SparkOrigin engine's own outputs; the table above is the independent
+numpy refit. They agree, with only small numpy-vs-engine differences (e.g. metabolic
+0.711 vs 0.693, both inside the 2/3–3/4 band).
 
 Per-domain log–log fit-and-extrapolation plots are in [`figures/`](figures/).
 
@@ -65,7 +72,7 @@ Per-domain log–log fit-and-extrapolation plots are in [`figures/`](figures/).
   independently. The full study — more domains, the trust/extrapolation gate,
   the dynamical-systems and causal-direction results, and a domain where SparkOrigin
   *fails* (log-linear seismic scaling, reported plainly) — is in the preprint:
-  **[**[preprint — DOI 10.5281/zenodo.20577739](https://doi.org/10.5281/zenodo.20577739)**]**.
+  **[preprint — DOI 10.5281/zenodo.20577739](https://doi.org/10.5281/zenodo.20577739)**.
 - Nothing here is tuned to flatter the method: `verify.py` is a transparent
   independent fit, and the numbers are whatever it computes.
 

@@ -23,12 +23,14 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 
-# label, csv, x-column, y-column, textbook exponent, train fraction (low-x region), law
+# label, csv, x-column, y-column, textbook exponent, train fraction (low-x = top-ranked region), law
+# Train fractions reproduce the preprint's training windows so this independent check
+# matches the paper: Kepler 5 inner planets, Zipf top-400 words, cities top-120 cities.
 CASES = [
     ("Kepler (planets)",    "kepler.csv",    "a",         "P",              1.50, 5 / 9, "P proportional to a^(3/2)"),
     ("Metabolic (mammals)", "metabolic.csv", "body_mass", "metabolic_rate", 0.75, 0.70,  "rate proportional to mass^(~0.7)"),
-    ("Zipf (Moby Dick)",    "mobydick.csv",  "rank",      "freq",          -1.00, 0.70,  "freq proportional to rank^(-1)"),
-    ("City size (US)",      "cities.csv",    "rank",      "population",    -0.75, 0.70,  "pop proportional to rank^(-alpha)"),
+    ("Zipf (Moby Dick)",    "mobydick.csv",  "rank",      "freq",          -1.00, 0.20,  "freq proportional to rank^(-1)"),
+    ("City size (US)",      "cities.csv",    "rank",      "population",    -0.75, 0.12,  "pop proportional to rank^(-alpha)"),
 ]
 
 
