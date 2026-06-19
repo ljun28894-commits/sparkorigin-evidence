@@ -65,7 +65,7 @@ Per-domain log–log fit-and-extrapolation plots are in [`figures/`](figures/).
   independently. The full study — more domains, the trust/extrapolation gate,
   the dynamical-systems and causal-direction results, and a domain where SparkOrigin
   *fails* (log-linear seismic scaling, reported plainly) — is in the preprint:
-  **[preprint DOI — paste Zenodo link here]**.
+  **[**[preprint — DOI 10.5281/zenodo.20577739](https://doi.org/10.5281/zenodo.20577739)**]**.
 - Nothing here is tuned to flatter the method: `verify.py` is a transparent
   independent fit, and the numbers are whatever it computes.
 
