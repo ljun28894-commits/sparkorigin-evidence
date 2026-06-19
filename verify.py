@@ -7,8 +7,8 @@ TRAINING region only, then predicts a held-out EXTRAPOLATION region the fit
 never saw, and reports the recovered exponent and the held-out error.
 
 The point: you do not have to trust SparkOrigin. Run this and confirm for yourself
-that the laws are real and that they hold *outside* the range they were fit on
--- which is the property an overfit curve cannot have.
+that the laws are real and that they hold *outside* the range they were fit on,
+which is the property an overfit curve cannot have.
 
 Data: real and publicly citable (see README.md). Dependencies: numpy only.
 Run:  python verify.py
@@ -56,7 +56,7 @@ def fit_powerlaw(x, y):
 
 def run():
     print("=" * 80)
-    print(" Independent verification -- plain numpy log-log fit, NO SparkOrigin engine")
+    print(" Independent verification: plain numpy log-log fit, no SparkOrigin engine")
     print(" Fit on the TRAINING region only, then predict a HELD-OUT region it never saw")
     print("=" * 80)
     print(f"{'domain':22s}{'n_tr':>5}{'n_te':>5}{'exp(fit)':>10}{'textbook':>9}"
@@ -65,7 +65,7 @@ def run():
     for label, fname, xcol, ycol, known, trfrac, _law in CASES:
         path = DATA / fname
         if not path.exists():
-            print(f"{label:22s}  (missing {fname} -- copy it into ./data/)")
+            print(f"{label:22s}  (missing {fname}, copy it into ./data/)")
             continue
         x, y = load(path, xcol, ycol)
         order = np.argsort(x)
@@ -91,7 +91,7 @@ def run():
     print(" OOS med%/p90%: median and 90th-percentile relative error on the")
     print(" held-out region the fit never saw. These are honest re-computations,")
     print(" not numbers reported by SparkOrigin. A curve that merely overfits cannot")
-    print(" keep a low OOS error here; a real law can.")
+    print(" keep a low OOS error here. A real law can.")
     print("=" * 80)
 
 
